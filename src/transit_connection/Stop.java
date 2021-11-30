@@ -25,5 +25,9 @@ public class Stop {
         return lines;
     }
 
+    public StopName getName(){
+        return this.name;
+    }
+
 
 }
