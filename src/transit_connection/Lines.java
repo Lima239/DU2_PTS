@@ -22,7 +22,7 @@ public class Lines {
 
     }
 
-    public String updateCapacityAndGetPreviousStop(String line, String stop, int time) {
+    public String updateCapacityAndGetPreviousStop(LineName line, StopName stop, Time time) {
         return "";
     }
 }

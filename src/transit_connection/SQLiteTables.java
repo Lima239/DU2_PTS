@@ -15,7 +15,6 @@ public class SQLiteTables {
             stmt = c.createStatement();
             String sql = "DROP TABLE  IF EXISTS LineIDS;" +
                     "DROP TABLE  IF EXISTS StartingTimes;" +
-                    "DROP TABLE  IF EXISTS FirstStop;" +
                     "DROP TABLE  IF EXISTS StopIds;" +
                     "DROP TABLE  IF EXISTS Paths;" +
                     "DROP TABLE  IF EXISTS NumberOfPassengers;";
@@ -23,15 +22,11 @@ public class SQLiteTables {
             sql += "CREATE TABLE LineIDS " +
                     "(ID INT PRIMARY KEY     NOT NULL," +
                     " LineName           TEXT    NOT NULL, " +
-                    " StaringStop         TEXT    NOT NULL)";
+                    " StartingStop         TEXT    NOT NULL)";
 
             sql += "CREATE TABLE StartingTimes " +
                     "(LineID IS NULL OR EXISTS(SELECT 1 FROM LineIDS WHERE ID=LineID)," +
                     " StartingTime          TEXT    NOT NULL) " ;
-
-            sql += "CREATE TABLE FirstStop " +
-                    "(LineID IS NULL OR EXISTS(SELECT 1 FROM LineIDS WHERE ID=LineID)," +
-                    " StopName           TEXT    NOT NULL)";
 
             sql += "CREATE TABLE StopIds " +
                     "(ID INT PRIMARY KEY     NOT NULL," +
@@ -49,7 +44,6 @@ public class SQLiteTables {
                     " To IS NULL OR EXISTS(SELECT 1 FROM Paths WHERE StopToID=To), " +
                     " startingTime      INT ," +
                     " numberOfPassengers        INT)";
-
 
             stmt.executeUpdate(sql);
             stmt.close();

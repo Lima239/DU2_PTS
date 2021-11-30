@@ -37,4 +37,8 @@ public class LineSegment {
     public void incrementCapacity(Time startingTime){
         numberOfPassengers.put(startingTime, numberOfPassengers.get(startingTime) + 1);
     }
+
+    public StopName getName(){
+        return nextStop.getName();
+    }
 }

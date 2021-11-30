@@ -1,9 +1,6 @@
 package transit_connection;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class InsertValues {
     private Connection connect() {
@@ -32,65 +29,57 @@ public class InsertValues {
         }
     }
 
-    public void insertIntoStartingTimes(String name, double capacity) {
-        String sql = "INSERT INTO warehouses(name,capacity) VALUES(?,?)";
+    public void insertIntoStartingTimes(int LineID, String StartingTime) {
+        String sql = "INSERT INTO StartingTimes(LineID,StartingTime) VALUES(?,?)";
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, name);
-            pstmt.setDouble(2, capacity);
+            pstmt.setInt(1, LineID);
+            pstmt.setString(2, StartingTime);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void insertIntoFirstStop(String name, double capacity) {
-        String sql = "INSERT INTO warehouses(name,capacity) VALUES(?,?)";
+    public void insertIntoStopIds(int ID, String StopName) {
+        String sql = "INSERT INTO StopIds(ID,StopName) VALUES(?,?)";
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, name);
-            pstmt.setDouble(2, capacity);
+            pstmt.setInt(1, ID);
+            pstmt.setString(2, StopName);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void insertIntoStopIds(String name, double capacity) {
-        String sql = "INSERT INTO warehouses(name,capacity) VALUES(?,?)";
+    public void insertIntoPaths(int LineID, int StopFromID, int StopToID, int Duration) {
+        String sql = "INSERT INTO Paths(LineID, StopFromID, StopToID, Duration) VALUES(?,?)";
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, name);
-            pstmt.setDouble(2, capacity);
+            pstmt.setInt(1, LineID);
+            pstmt.setInt(2, StopFromID);
+            pstmt.setInt(3, StopToID);
+            pstmt.setInt(4, Duration);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void insertIntoPaths(String name, double capacity) {
-        String sql = "INSERT INTO warehouses(name,capacity) VALUES(?,?)";
+    public void insertIntoNumberOfPassengers(int LineID, int From, int To, int startingTime, int numberOfPassengers) {
+        String sql = "INSERT INTO NumberOfPassengers(LineID, From, To, startingTime, numberOfPassengers) VALUES(?,?)";
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, name);
-            pstmt.setDouble(2, capacity);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public void insertIntoNumberOfPassengers(String name, double capacity) {
-        String sql = "INSERT INTO warehouses(name,capacity) VALUES(?,?)";
-
-        try (Connection conn = this.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, name);
-            pstmt.setDouble(2, capacity);
+            pstmt.setInt(1, LineID);
+            pstmt.setInt(2, From);
+            pstmt.setInt(3, To);
+            pstmt.setInt(4, startingTime);
+            pstmt.setInt(5, numberOfPassengers);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

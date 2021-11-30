@@ -1,0 +1,2 @@
+testDB:
+	cat <<EOF | sqlite3 test.db "VACUUM;"
