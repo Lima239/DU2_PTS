@@ -16,7 +16,7 @@ public class Queries {
         return conn;
     }
 
-    public void selectAll(){
+    public void loadLine(){
         String sql = "SELECT id, name, capacity FROM warehouses";
 
         try (Connection conn = this.connect();
@@ -34,5 +34,21 @@ public class Queries {
         }
     }
 
+    public void loadStop(){
+        String sql = "SELECT id, name, capacity FROM warehouses";
 
+        try (Connection conn = this.connect();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)){
+
+            // loop through the result set
+            while (rs.next()) {
+                System.out.println(rs.getInt("id") +  "\t" +
+                        rs.getString("name") + "\t" +
+                        rs.getDouble("capacity"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
