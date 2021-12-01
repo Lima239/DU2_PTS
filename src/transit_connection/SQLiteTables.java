@@ -44,7 +44,7 @@ public class SQLiteTables {
                     " To IS NULL OR EXISTS(SELECT 1 FROM Paths WHERE StopToID=To), " +
                     " startingTime      INT ," +
                     " numberOfPassengers        INT)";
-
+            String query = "SELECT LineName, StartingStop, (SELECT StartingTime FROM StartingTimes WHERE LineId=Id) as StartingTimes;";
             stmt.executeUpdate(sql);
             stmt.close();
             c.close();
