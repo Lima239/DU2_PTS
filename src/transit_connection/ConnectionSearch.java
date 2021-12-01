@@ -12,9 +12,27 @@ public class ConnectionSearch {
     }
 
     public ConnectionData search(StopName from, StopName to, Time time) {
-        stops.setStartingStop(from, time);
-        List<LineName> from_lines = stops.getLines(from);
-        lines.updateReachable(from_lines, from, time);
-        return new ConnectionData();
+        StopName currStop = from;
+        Time currTime = time;
+        stops.setStartingStop(currStop, currTime);
+
+        while (currStop.get() != to.get()) {
+            List<LineName> out_lines = stops.getLines(currStop);
+            lines.updateReachable(out_lines, currStop, currTime);
+            Optional<Map.Entry<StopName, Time>> res = stops.earliestReachableStopAfter(currTime);
+            if (res.isEmpty())
+                return null;
+            currStop = res.get().getKey();
+            currTime = res.get().getValue();
+        }
+        currStop = to;
+        ConnectionData data = new ConnectionData();
+        while (currStop.get() != from.get()) {
+            Map.Entry<Time, LineName> res = stops.getReachableAt(currStop);
+            currStop = lines.updateCapacityAndGetPreviousStop(res.getValue(), currStop, res.getKey());
+            data.getRoute().add(0, Map.entry(currStop, res.getKey()));
+        }
+
+        return data;
     }
 }
