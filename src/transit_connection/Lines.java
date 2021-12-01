@@ -1,12 +1,13 @@
 package transit_connection;
 
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Lines {
+public class Lines implements LinesInterface{
     private DataLoaderInterface dataLoader;
-    private Map<LineName, Line> lines;
+    private Map<LineName, LineInterface> lines;
 
     public Lines(DataLoaderInterface dataLoader) {
         this.dataLoader = dataLoader;
@@ -19,10 +20,13 @@ public class Lines {
             }
             this.lines.get(line).updateReachable(time, stop);
         }
-
     }
 
-    public String updateCapacityAndGetPreviousStop(LineName line, StopName stop, Time time) {
-        return "";
+    public StopName updateCapacityAndGetPreviousStop(LineName line, StopName stop, Time time) {
+        return this.lines.get(line).updateCapacityAndGetPreviousStop(time,stop);
+    }
+
+    public void clean(){
+        lines = new HashMap<>();
     }
 }

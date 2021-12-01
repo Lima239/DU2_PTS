@@ -1,40 +1,62 @@
 package transit_connection;
 
 import java.time.LocalTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
-public class Stops {
+public class Stops implements StopsInterface{
     private DataLoaderInterface dataLoader;
-    private Map<StopName, Stop> stops;
+    private Map<StopName, StopInterface> stops;
 
     public Stops(DataLoaderInterface dataLoader) {
         this.dataLoader = dataLoader;
+        this.stops = new HashMap<>();
     }
 
-    public Optional<Map.Entry<String, Integer>> earliestReachableStopAfter(int time) {
-        return Optional.of(Map.entry("", 0));
+    public Optional<Map.Entry<StopName, Time>> earliestReachableStopAfter(Time time) {
+        Time minTime = new Time(LocalTime.of(23,59,59,999999999));
+        for (StopName stop : stops.keySet()) {
+            Map.Entry<Time, LineName> info = stops.get(stop).getReachableAt();
+            Time reachableTime = info.getKey();
+            if (time.getTime().compareTo(reachableTime.getTime()) < 0) {
+                if (reachableTime.getTime().compareTo(minTime.getTime()) < 0) minTime = reachableTime;
+            }
+        }
+
+        StopName earliestReachable = null;
+        for (StopName stop : stops.keySet()) {
+            Map.Entry<Time, LineName> info = stops.get(stop).getReachableAt();
+            if (info.getKey().getTime().equals(minTime.getTime())) earliestReachable = stop;
+        }
+        Map.Entry<StopName, Time> result = new AbstractMap.SimpleEntry<>(earliestReachable, minTime);
+
+        return Optional.of(result);
     }
 
-    public boolean setStartingStop(StopName stop, Time time) {
+    public void setStartingStop(StopName stop, Time time) throws IllegalArgumentException {
         if (!stops.containsKey(stop)) {
             Stop s = dataLoader.loadStop(stop);
-            if (s == null)
-                return false;
+            if (s == null) throw new IllegalArgumentException("Stop does not exist.");
             stops.put(stop, s);
         }
         stops.get(stop).updateReachableAt(time, null);
-
-        return true;
     }
 
-    public List<LineName> getLines(StopName stop) {
+    public List<LineName> getLines(StopName stop) throws IllegalArgumentException {
+        if (!stops.containsKey(stop)){
+            Stop s = dataLoader.loadStop(stop);
+            if (s == null)  throw new IllegalArgumentException("Stop does not exist.");
+            stops.put(stop, s);
+        }
         return stops.get(stop).getLines();
     }
 
-    public Map.Entry<Integer, String> getReachableAt(String stop) {
-        return Map.entry(0, "");
+    public Map.Entry<Time, LineName> getReachableAt(StopName stop) throws NoSuchElementException{
+        if(!stops.containsKey(stop)) throw new NoSuchElementException("Stop hasn't been loaded.");
+        return stops.get(stop).getReachableAt();
+    }
+
+    public void clean(){
+        stops = new HashMap<>();
     }
 
 }
