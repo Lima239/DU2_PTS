@@ -2,14 +2,15 @@ package transit_connection;
 
 import java.util.*;
 
-public class Stop {
+public class Stop implements StopInterface{
     private StopName name;
     private List<LineName> lines;
     private Optional<Time> reachableAt;
     private Optional<LineName> reachableVia;
 
-    public Stop(StopName name, List<String> lines) {
+    public Stop(StopName name, List<LineName> lines) {
         this.name = name;
+        this.lines = Collections.unmodifiableList(lines);
     }
 
     public void updateReachableAt(Time time, Optional<LineName> line) {
@@ -22,12 +23,10 @@ public class Stop {
     }
 
     public List<LineName> getLines() {
-        return lines;
+        return this.lines;
     }
 
     public StopName getName(){
         return this.name;
     }
-
-
 }
