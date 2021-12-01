@@ -2,7 +2,7 @@ package transit_connection;
 
 import java.util.*;
 
-public class LineSegment {
+public class LineSegment implements LineSegmentInterface {
     private TimeDiff timeToNextStop;
     private Map<Time, Integer> numberOfPassengers;
     private int capacity;
