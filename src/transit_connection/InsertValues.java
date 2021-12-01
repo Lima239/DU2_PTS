@@ -16,7 +16,7 @@ public class InsertValues {
     }
 
     public void insertIntoLineID(int ID, String LineName,String StaringStop) {
-        String sql = "INSERT INTO LineID(ID, LineName, StaringStop) VALUES(?,?)";
+        String sql = "INSERT INTO LineID(ID, LineName, StaringStop) VALUES(?,?,?)";
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -56,7 +56,7 @@ public class InsertValues {
     }
 
     public void insertIntoPaths(int LineID, int StopFromID, int StopToID, int Duration) {
-        String sql = "INSERT INTO Paths(LineID, StopFromID, StopToID, Duration) VALUES(?,?)";
+        String sql = "INSERT INTO Paths(LineID, StopFromID, StopToID, Duration) VALUES(?,?,?,?)";
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -71,7 +71,7 @@ public class InsertValues {
     }
 
     public void insertIntoNumberOfPassengers(int LineID, int From, int To, int startingTime, int numberOfPassengers) {
-        String sql = "INSERT INTO NumberOfPassengers(LineID, From, To, startingTime, numberOfPassengers) VALUES(?,?)";
+        String sql = "INSERT INTO NumberOfPassengers(LineID, From, To, startingTime, numberOfPassengers) VALUES(?,?,?,?,?)";
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -85,5 +85,4 @@ public class InsertValues {
             System.out.println(e.getMessage());
         }
     }
-
 }
