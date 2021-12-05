@@ -7,9 +7,9 @@ public class Line implements LineInterface{
     private LineName name;
     private ArrayList<Time> startingTimes;
     private StopName firstStop;
-    private ArrayList<LineSegment> lineSegments;
+    private ArrayList<LineSegmentInterface> lineSegments;
 
-    public Line(LineName name, ArrayList<Time> startingTimes, StopName firstStop, ArrayList<LineSegment> lineSegments){
+    public Line(LineName name, ArrayList<Time> startingTimes, StopName firstStop, ArrayList<LineSegmentInterface> lineSegments){
         this.name = name;
         this.startingTimes = new ArrayList<>(startingTimes);
         this.firstStop = firstStop;
