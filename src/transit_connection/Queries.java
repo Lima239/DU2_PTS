@@ -16,25 +16,20 @@ public class Queries {
         return conn;
     }
 
-    public void loadLine(){
-        String sql = "SELECT id, name, capacity FROM warehouses";
+    public void loadLineAndFirstStop(LineName line){
+        String sql = "SELECT LineName, ID, StartingStop" +
+                "FROM LineIDS " +
+                "WHERE LineName = " + line.toString();
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
-
-            // loop through the result set
-            while (rs.next()) {
-                System.out.println(rs.getInt("id") +  "\t" +
-                        rs.getString("name") + "\t" +
-                        rs.getDouble("capacity"));
-            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void loadStop(){
+    public void loadStop(StopName stopName){
         String sql = "SELECT id, name, capacity FROM warehouses";
 
         try (Connection conn = this.connect();
