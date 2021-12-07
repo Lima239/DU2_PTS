@@ -19,4 +19,17 @@ public class UpdateDatabase {
         return conn;
     }
 
+    public void updateCapacity(int LineID, int numberOfPassengers) {
+        String sql = "UPDATE NumberOfPassengers n" +
+                "SET n.numberOfPassengers = " + numberOfPassengers +
+                "WHERE n.LineID = LineID";
+
+        try (Connection conn = this.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 }
