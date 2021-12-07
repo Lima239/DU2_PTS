@@ -1,7 +1,8 @@
+package test;
+
 import org.junit.Test;
 import org.junit.*;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import transit_connection.*;
 import java.time.LocalTime;
 import java.util.*;
@@ -15,9 +16,6 @@ public class LineTest {
     private StopName nextStop = new StopName("stop 2");
     private final TimeDiff lineSegmentsTimeDiff = new TimeDiff(LocalTime.of(10,15), LocalTime.of(10,20));
     private Line line;
-
-    //private final List<StopName> nextStops = List.of(new StopName("Stop B"), new StopName("Stop C"));
-
     private  List<Dictionary<Time, LineName>> stopsData;
     private List<Boolean> lineSegmentCapacityUpdated;
 
@@ -53,19 +51,9 @@ public class LineTest {
     }
 
     @Test
-    public void updateReachableTest() {
-        line.updateReachable(new Time(LocalTime.of(10,30)), new StopName("stop 3"));
-        assertTrue(stopsData.get(0).keys().equals(null) && stopsData.get(0).isEmpty());
-        assertEquals(stopsData.get(1).keys(), new Time(startTime.getTime().plus(lineSegmentsTimeDiff.getDifference())));
-        assertEquals(stopsData.get(1).elements(), new LineName("L1"));
-        assertEquals(stopsData.get(2).keys(), new Time(LocalTime.of(10,30)));
-        assertEquals(stopsData.get(2).elements(), new LineName("L1"));
-    }
-
-    @Test
     public void updateCapacityAndGetPreviousStopTest() {
-        StopName data = line.updateCapacityAndGetPreviousStop( new Time(LocalTime.of(10,0)),new StopName("Stop B"),);
-        assertEquals(data, new StopName("Stop A"));
-        assertTrue(lineSegmentCapacityUpdated.get(0));
+        StopName data = line.updateCapacityAndGetPreviousStop(new Time(LocalTime.of(10,0)),
+                new StopName("stop 1"));
+        assertEquals(data.get(), new StopName("stop 1").get());
     }
 }

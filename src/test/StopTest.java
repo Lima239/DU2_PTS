@@ -1,6 +1,7 @@
+package test;
+
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import transit_connection.*;
@@ -27,27 +28,27 @@ public class StopTest {
 
     @Test
     public void getReachableTest() {
+        stop.updateReachableAt(new Time(LocalTime.of(10,10)), Optional.of(new LineName("linka 1")));
         Map.Entry<Time, LineName> data = stop.getReachableAt();
-        assertEquals(data.getKey(), null);
-        assertEquals(data.getValue(), null);
-        //assertTrue(data.getKey().equals(null) && data.getValue());
+        assertEquals(data.getKey().getTime(), new Time(LocalTime.of(10,10)).getTime());
+        assertEquals(data.getValue().get(), data.getValue().get());
     }
 
     @Test
     public void updateReachableTest() {
         stop.updateReachableAt(new Time(LocalTime.of(18,45)), Optional.of(new LineName("4")));
         Map.Entry<Time, LineName> data = stop.getReachableAt();
-        assertEquals(data.getKey(), new Time(LocalTime.of(18,45)));
-        assertEquals(data.getValue(), Optional.of(new LineName("4")));
+        assertEquals(data.getKey().getTime(), new Time(LocalTime.of(18,45)).getTime());
+        assertEquals(data.getValue().get(),new LineName("4").get());
 
         stop.updateReachableAt(new Time(LocalTime.of(18,50)), Optional.of(new LineName("9")));
         data = stop.getReachableAt();
-        assertEquals(data.getKey(), new Time(LocalTime.of(18,50)));
-        assertEquals(data.getValue(), Optional.of(new LineName("9")));
+        assertEquals(data.getKey().getTime(), new Time(LocalTime.of(18,50)).getTime());
+        assertEquals(data.getValue().get(), new LineName("9").get());
 
         stop.updateReachableAt(new Time(LocalTime.of(18,56)), Optional.of(new LineName("11")));
         data = stop.getReachableAt();
-        assertEquals(data.getKey(), new Time(LocalTime.of(18,56)));
-        assertEquals(data.getValue(), Optional.of(new LineName("11")));
+        assertEquals(data.getKey().getTime(), new Time(LocalTime.of(18,56)).getTime());
+        assertEquals(data.getValue().get(), new LineName("11").get());
     }
 }
