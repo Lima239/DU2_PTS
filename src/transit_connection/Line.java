@@ -21,7 +21,7 @@ public class Line implements LineInterface{
         StopName nextStop = firstStop;
         int counter = 0;
         int startingLineSegment = 0;
-        while (!Objects.equals(nextStop, stop)) {
+        while (nextStop.get().equals(stop.get())) {
             Dictionary<Time, StopName> info = lineSegments.get(counter).nextStop(timeTmp);
             timeTmp = info.keys().nextElement();
             nextStop = info.elements().nextElement();
@@ -44,7 +44,7 @@ public class Line implements LineInterface{
                 earliestIndex++;
                 if (earliestIndex >= startingTimes.size()) return;
                 TimeDiff wait = new TimeDiff(startingTimes.get(earliestIndex).getTime(),
-                        startingTimes.get(earliestIndex-1).getTime());
+                        startingTimes.get(earliestIndex -1 ).getTime());
                 earliest = new Time(earliest.getTime().plus(wait.getDifference()));
                 continue;
             }
@@ -60,7 +60,10 @@ public class Line implements LineInterface{
         StopName previousStop = null;
         int counter = 0;
 
-        while(!nextStop.equals(stop)){
+        if (nextStop.get().equals(stop.get())) {
+            return stop;
+        }
+        while(!nextStop.get().equals(stop.get())){
             Dictionary<Time, StopName> info = lineSegments.get(counter).nextStop(startingTime);
             Time tmpTime = info.keys().nextElement();
             timeDiff = new TimeDiff(tmpTime.getTime(), startingTime.getTime());

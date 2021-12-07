@@ -1,3 +1,5 @@
+package test;
+
 import transit_connection.*;
 import org.junit.*;
 
@@ -16,27 +18,29 @@ public class LineSegmentTest {
 
     @Before
     public void setUp() {
-        lineSegment = new LineSegment(timeToNextStop, capacity ,lineName,nextStop);
+        lineSegment = new LineSegment(timeToNextStop, capacity ,lineName, nextStop);
     }
 
     @Test
     public void initTest() {
-        assertEquals("zochova", nextStop.getName());
+        assertEquals("zochova", nextStop.getName().get());
     }
 
     @Test
     public void nextStopTest() {
-        Dictionary<Time, StopName> tmpStop = new Hashtable();
-        tmpStop.put(new Time(startTime.getTime().plus(timeToNextStop.getDifference())), new StopName("zochova"));
-        assertEquals(tmpStop, lineSegment.nextStop(startTime));
+        assertEquals(nextStop.getName(),
+                lineSegment.nextStop(startTime).elements().nextElement());
+        assertEquals(new Time(startTime.getTime().plus(timeToNextStop.getDifference())).getTime(),
+                lineSegment.nextStop(startTime).keys().nextElement().getTime());
     }
 
     @Test
     public void nextStopAndUpdateReachableTest() {
         Tuple tuple = lineSegment.nextStopAndUpdateReachable(startTime);
-        assertEquals(new Time(startTime.getTime().plus(timeToNextStop.getDifference())), tuple.getTime());
+        assertEquals(new Time(startTime.getTime().plus(timeToNextStop.getDifference())).getTime(),
+                tuple.getTime().getTime());
         assertTrue(tuple.getBool());
-        assertEquals(new StopName("zochova"),tuple.getStopName());
+        assertEquals(new StopName("zochova").get(),tuple.getStopName().get());
     }
 
 }
