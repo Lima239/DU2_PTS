@@ -33,6 +33,9 @@ public class ConnectionSearch {
             data.getRoute().add(0, Map.entry(currStop, res.getKey()));
         }
 
+        this.stops.clean();
+        this.lines.clean();
+
         return data;
     }
 }

@@ -14,6 +14,7 @@ public class Tuple {
     public Time getTime(){
         return time;
     }
+
     public boolean getBool(){
         return bool;
     }

@@ -30,7 +30,8 @@ public class Queries {
     }
 
     public void loadStop(StopName stopName){
-        String sql = "SELECT id, name, capacity FROM warehouses";
+        String sql = "SELECT StartingStop FROM LineIDS" +
+                "WHERE StartingStop = " + stopName.toString();
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
