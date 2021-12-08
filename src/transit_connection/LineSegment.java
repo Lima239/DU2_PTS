@@ -3,6 +3,7 @@ package transit_connection;
 import java.util.*;
 
 public class LineSegment implements LineSegmentInterface {
+    // vsetky tieto premenne mozu byt final
     private TimeDiff timeToNextStop;
     private Map<Time, Integer> numberOfPassengers;
     private int capacity;
