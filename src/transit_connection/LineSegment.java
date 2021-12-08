@@ -28,6 +28,7 @@ public class LineSegment implements LineSegmentInterface {
             numberOfPassengers.put(startTime,0);
         }
         boolean enoughSpace = numberOfPassengers.get(startTime) < capacity;
+        //toto posobi trosku necitatelne
         if(enoughSpace) nextStop.updateReachableAt(new Time(startTime.getTime().plus(timeToNextStop.getDifference())),
                 Optional.ofNullable(lineName));
         return new Tuple(new Time(startTime.getTime().plus(timeToNextStop.getDifference())), nextStop.getName(),
