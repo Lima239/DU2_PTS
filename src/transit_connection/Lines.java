@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Lines implements LinesInterface{
+    // dataloader mohol byt final
     private DataLoaderInterface dataLoader;
     private Map<LineName, LineInterface> lines;
 
@@ -23,6 +24,7 @@ public class Lines implements LinesInterface{
     }
 
     public StopName updateCapacityAndGetPreviousStop(LineName line, StopName stop, Time time) {
+        //tuto si mohla skontrolovat sa line nachadza v lines
         return this.lines.get(line).updateCapacityAndGetPreviousStop(time,stop);
     }
 
