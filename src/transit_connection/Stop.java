@@ -3,7 +3,9 @@ package transit_connection;
 import java.util.*;
 
 public class Stop implements StopInterface{
+    //mohla byt tato premenna final
     private StopName name;
+    //mohla byt tato premenna final
     private List<LineName> lines;
     private Optional<Time> reachableAt;
     private Optional<LineName> reachableVia;
@@ -14,6 +16,7 @@ public class Stop implements StopInterface{
     }
 
     public void updateReachableAt(Time time, Optional<LineName> line) {
+        //mohla si skontrolovat, ci time nie je null
         this.reachableAt = Optional.of(time);
         this.reachableVia = line;
     }
