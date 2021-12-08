@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.*;
 
 public class Stops implements StopsInterface{
+    //dataloader mohol byt final
     private DataLoaderInterface dataLoader;
     private Map<StopName, StopInterface> stops;
 
@@ -13,6 +14,7 @@ public class Stops implements StopsInterface{
     }
 
     public Optional<Map.Entry<StopName, Time>> earliestReachableStopAfter(Time time) {
+        //podla mna si si to touto reprezentaciou casu strasne skomplikovala nato co bol ciel :D
         Time minTime = new Time(LocalTime.of(23,59,59,999999999));
         for (StopName stop : stops.keySet()) {
             Map.Entry<Time, LineName> info = stops.get(stop).getReachableAt();
