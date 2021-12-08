@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.*;
 
 public class Line implements LineInterface{
+    // vsetky premenne mozu byt final
     private LineName name;
     private ArrayList<Time> startingTimes;
     private StopName firstStop;
