@@ -11,6 +11,7 @@ public class Line implements LineInterface{
     private ArrayList<LineSegmentInterface> lineSegments;
 
     public Line(LineName name, ArrayList<Time> startingTimes, StopName firstStop, ArrayList<LineSegmentInterface> lineSegments){
+        // mohla si tu skontrolovat ci nie je nahodou prazdny array list, pretoze musi mat aspon jeden linesegment
         this.name = name;
         this.startingTimes = new ArrayList<>(startingTimes);
         this.firstStop = firstStop;
